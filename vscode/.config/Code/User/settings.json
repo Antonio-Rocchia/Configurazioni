@@ -1,0 +1,6 @@
+{
+    "window.dialogStyle": "custom",
+    "window.titleBarStyle": "custom",
+    "editor.fontFamily": "'Roboto Mono', 'monospace', monospace",
+    "keyboard.dispatch": "keyCode"
+}
