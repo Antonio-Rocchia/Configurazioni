@@ -7,3 +7,9 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     vim.highlight.on_yank()
   end,
 })
+
+-- Reset cursor before quitting
+vim.api.nvim_create_autocmd("VimLeave", {
+  group = tonino_group,
+  command = "set guicursor=a:ver25",
+})
