@@ -1,0 +1,1 @@
+find . -type l -exec sh -c 'if [ "$(readlink -f "$0" | grep -E "$HOME/.Configurazioni")" ]; then echo "$0"; fi' {} \;
