@@ -130,7 +130,7 @@ quick-locations() {
     else
       if [[ -f "$FUZZYDB_DIR"/"$DB_NAME" ]]; then
         SELECTED_STRING=$(cat "$FUZZYDB_DIR"/"$DB_NAME" | fzf) 
-        if [[ SELECTED_STRING = "" ]]; then
+        if [[ $? -ne 0 ]]; then
           # When the user press escape don't do anything
           return 0
         else
@@ -214,7 +214,7 @@ quick-edits() {
     else
       if [[ -f "$FUZZYDB_DIR"/"$DB_NAME" ]]; then
         SELECTED_STRING=$(cat "$FUZZYDB_DIR"/"$DB_NAME" | fzf) 
-        if [[ SELECTED_STRING = "" ]]; then
+        if [[ $? -ne 0 ]]; then
           # When the user press escape don't do anything
           return 0
         else
