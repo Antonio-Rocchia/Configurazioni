@@ -150,8 +150,8 @@ quick-locations() {
 
 quick-edits() {
     PROGRAM_NAME='quick-edits'
-    MANAGED_STRING='file path'
-    UTILITY='edit the selected file with $EDITOR'
+    MANAGED_STRING='file and directory path'
+    UTILITY='edit the selected file or directory with $EDITOR'
     DB_NAME='quick-edits-db'
   
     ARGC=$#
@@ -165,8 +165,8 @@ quick-edits() {
         save)
           if [[ $ARGC -eq 2 ]]; then
             PATH_TO_ABSOLUTE=$(realpath $2)
-            if ! [[ -f "$PATH_TO_ABSOLUTE" ]]; then
-              echo "Error: The arguments for 'save' should be an existent file's path." >&2
+            if ! [[ -f "$PATH_TO_ABSOLUTE" || -d "$PATH_TO_ABSOLUTE" ]]; then
+              echo "Error: The arguments for 'save' should be an existent file's or directory's path." >&2
               return 1
             fi
             # ADD TO DATABASE
