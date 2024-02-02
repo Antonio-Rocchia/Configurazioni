@@ -1,7 +1,7 @@
 #!/bin/bash
 FUZZYDB_DIR="$HOME/.config/fuzzydb"
 
-_fuzzydb-engine () {
+fuzzydb-engine () {
     ARGC=$#
     ALLOWED_ARGS=3
     
@@ -45,7 +45,7 @@ _fuzzydb-engine () {
     esac
 }
 
-_fuzzydb-usage() {
+fuzzydb-usage() {
   PROGRAM_NAME="$1"
   MANAGED_STRING="$2"
   UTILITY="$3"
@@ -75,7 +75,7 @@ quick-locations() {
 
     if [[ $ARGC -gt $MAX_ALLOWED_ARGS ]]; then
       echo "Error: Too many arguments." >&2
-      _fuzzydb-usage "$PROGRAM_NAME" "$MANAGED_STRING" "$UTILITY"
+      fuzzydb-usage "$PROGRAM_NAME" "$MANAGED_STRING" "$UTILITY"
     elif [[ $ARGC -gt 0 ]]; then
       case $1 in
         save)
@@ -86,7 +86,7 @@ quick-locations() {
               return 1
             fi
             # ADD TO DATABASE
-            _fuzzydb-engine 'save' "$DB_NAME" "$PATH_TO_ABSOLUTE"
+            fuzzydb-engine 'save' "$DB_NAME" "$PATH_TO_ABSOLUTE"
             if [[ $? -ne 0 ]]; then
               echo "Error: Unable to save a $MANAGED_STRING to the database."
               return 1
@@ -96,13 +96,13 @@ quick-locations() {
             fi
           else
             echo "Error: Invalid number of arguments for 'save' command." >&2
-            _fuzzydb-usage "$PROGRAM_NAME" "$MANAGED_STRING" "$UTILITY"
+            fuzzydb-usage "$PROGRAM_NAME" "$MANAGED_STRING" "$UTILITY"
             return 1
           fi
           ;;
         delete)
           if [[ $ARGC -eq 1 ]]; then
-            _fuzzydb-engine 'delete' "$DB_NAME" "$PATH_TO_ABSOLUTE"
+            fuzzydb-engine 'delete' "$DB_NAME" "$PATH_TO_ABSOLUTE"
             if [[ $? -ne 0 ]]; then
               echo "Error: Unable to remove a $MANAGED_STRING from the database."
               return 1
@@ -112,18 +112,18 @@ quick-locations() {
             fi
           else
             echo "Error: Invalid number of arguments for 'delete' command." >&2
-            _fuzzydb-usage "$PROGRAM_NAME" "$MANAGED_STRING" "$UTILITY"
+            fuzzydb-usage "$PROGRAM_NAME" "$MANAGED_STRING" "$UTILITY"
             return 1
           fi
           ;;
         help| --help| -h)
           # Display help message
-          _fuzzydb-usage "$PROGRAM_NAME" "$MANAGED_STRING" "$UTILITY"
+          fuzzydb-usage "$PROGRAM_NAME" "$MANAGED_STRING" "$UTILITY"
           return 0
           ;;
         *)
           echo "Error: Invalid command. Available commands are 'save', 'delete', and 'help'." >&2
-          _fuzzydb-usage "$PROGRAM_NAME" "$MANAGED_STRING" "$UTILITY"
+          fuzzydb-usage "$PROGRAM_NAME" "$MANAGED_STRING" "$UTILITY"
           return 1
           ;;
       esac
@@ -140,7 +140,7 @@ quick-locations() {
         fi
       else
         echo "Error: Database not initialized. Initialize it by saving your first $MANAGED_STRING"
-        _fuzzydb-usage "$PROGRAM_NAME" "$MANAGED_STRING" "$UTILITY"
+        fuzzydb-usage "$PROGRAM_NAME" "$MANAGED_STRING" "$UTILITY"
         return 1
       fi
     fi
@@ -159,7 +159,7 @@ quick-edits() {
 
     if [[ $ARGC -gt $MAX_ALLOWED_ARGS ]]; then
       echo "Error: Too many arguments." >&2
-      _fuzzydb-usage "$PROGRAM_NAME" "$MANAGED_STRING" "$UTILITY"
+      fuzzydb-usage "$PROGRAM_NAME" "$MANAGED_STRING" "$UTILITY"
     elif [[ $ARGC -gt 0 ]]; then
       case $1 in
         save)
@@ -170,7 +170,7 @@ quick-edits() {
               return 1
             fi
             # ADD TO DATABASE
-            _fuzzydb-engine 'save' "$DB_NAME" "$PATH_TO_ABSOLUTE"
+            fuzzydb-engine 'save' "$DB_NAME" "$PATH_TO_ABSOLUTE"
             if [[ $? -ne 0 ]]; then
               echo "Error: Unable to save a $MANAGED_STRING to the database."
               return 1
@@ -180,13 +180,13 @@ quick-edits() {
             fi
           else
             echo "Error: Invalid number of arguments for 'save' command." >&2
-            _fuzzydb-usage "$PROGRAM_NAME" "$MANAGED_STRING" "$UTILITY"
+            fuzzydb-usage "$PROGRAM_NAME" "$MANAGED_STRING" "$UTILITY"
             return 1
           fi
           ;;
         delete)
           if [[ $ARGC -eq 1 ]]; then
-            _fuzzydb-engine 'delete' "$DB_NAME" "$PATH_TO_ABSOLUTE"
+            fuzzydb-engine 'delete' "$DB_NAME" "$PATH_TO_ABSOLUTE"
             if [[ $? -ne 0 ]]; then
               echo "Error: Unable to remove a $MANAGED_STRING from the database."
               return 1
@@ -196,18 +196,18 @@ quick-edits() {
             fi
           else
             echo "Error: Invalid number of arguments for 'delete' command." >&2
-            _fuzzydb-usage "$PROGRAM_NAME" "$MANAGED_STRING" "$UTILITY"
+            fuzzydb-usage "$PROGRAM_NAME" "$MANAGED_STRING" "$UTILITY"
             return 1
           fi
           ;;
         help| --help| -h)
           # Display help message
-          _fuzzydb-usage "$PROGRAM_NAME" "$MANAGED_STRING" "$UTILITY"
+          fuzzydb-usage "$PROGRAM_NAME" "$MANAGED_STRING" "$UTILITY"
           return 0
           ;;
         *)
           echo "Error: Invalid command. Available commands are 'save', 'delete', and 'help'." >&2
-          _fuzzydb-usage "$PROGRAM_NAME" "$MANAGED_STRING" "$UTILITY"
+          fuzzydb-usage "$PROGRAM_NAME" "$MANAGED_STRING" "$UTILITY"
           return 1
           ;;
       esac
@@ -224,7 +224,7 @@ quick-edits() {
         fi
       else
         echo "Error: Database not initialized. Initialize it by saving your first $MANAGED_STRING"
-        _fuzzydb-usage "$PROGRAM_NAME" "$MANAGED_STRING" "$UTILITY"
+        fuzzydb-usage "$PROGRAM_NAME" "$MANAGED_STRING" "$UTILITY"
         return 1
       fi
     fi
