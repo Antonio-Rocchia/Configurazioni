@@ -232,7 +232,12 @@ quick-edits() {
           return 0
         else
           # COMANDO
-          $EDITOR "$SELECTED_STRING"
+          if [[ -f "$SELECTED_STRING" ]]; then
+            $EDITOR "$SELECTED_STRING"
+          else
+            cd "$SELECTED_STRING" || return 1
+            $EDITOR "$SELECTED_STRING"
+          fi
           return 0
         fi
       else
