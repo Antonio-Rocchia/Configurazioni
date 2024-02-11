@@ -235,8 +235,10 @@ quick-edits() {
           if [[ -f "$SELECTED_STRING" ]]; then
             $EDITOR "$SELECTED_STRING"
           else
+            OLD_DIR=$(pwd)
             cd "$SELECTED_STRING" || return 1
             $EDITOR "$SELECTED_STRING"
+            cd "$OLD_DIR" || return 1
           fi
           return 0
         fi
