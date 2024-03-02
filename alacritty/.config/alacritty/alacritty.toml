@@ -18,5 +18,10 @@ style = "Italic"
 family = "RobotoMono Nerd Font"
 style = "Regular"
 
+[keyboard]
+bindings = [
+  { key = "Space", mods = "Control | Shift", action = "None" },
+]
+
 [shell]
 program = "/bin/bash"
