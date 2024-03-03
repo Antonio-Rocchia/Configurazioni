@@ -7,15 +7,15 @@ shape = "Beam"
 size = 12.0
 
 [font.bold]
-family = "RobotoMono Nerd Font"
+family = "RobotoMono Nerd Font Emoji alias"
 style = "Bold"
 
 [font.italic]
-family = "RobotoMono Nerd Font"
+family = "RobotoMono Nerd Font Emoji alias"
 style = "Italic"
 
 [font.normal]
-family = "RobotoMono Nerd Font"
+family = "RobotoMono Nerd Font Emoji alias"
 style = "Regular"
 
 [keyboard]
