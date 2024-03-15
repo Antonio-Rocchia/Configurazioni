@@ -63,7 +63,8 @@ _flatpak-install:
 		com.discordapp.Discord \
 		com.spotify.Client \
 		com.github.tchx84.Flatseal \
-		org.gimp.GIMP
+		org.gimp.GIMP \
+		org.gnome.World.PikaBackup
 
 _flatpak-install-gnome: flatpak-install
 	flatpak install \
