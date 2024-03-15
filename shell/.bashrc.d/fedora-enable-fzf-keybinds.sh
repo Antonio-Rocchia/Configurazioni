@@ -1,3 +1,4 @@
+#!/bin/bash
 # fzf on Fedora
 if [ -x "$(command -v fzf)"  ]
 then
