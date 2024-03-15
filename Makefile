@@ -49,7 +49,8 @@ _flatpak-install:
 	flatpak install --assumeyes --noninteractive \
 		com.discordapp.Discord \
 		com.spotify.Client \
-		com.github.tchx84.Flatseal
+		com.github.tchx84.Flatseal \
+		org.gimp.GIMP
 
 _flatpak-install-gnome: flatpak-install
 	flatpak install \
@@ -58,6 +59,6 @@ _flatpak-install-gnome: flatpak-install
 .PHONY: fedora-setup
 .PHONY: fedora-setup-gnome
 
-fedora-setup: _dnf-setup-all _flatpak-install
+fedora-setup-generic: _dnf-setup-all _flatpak-install
 
 fedora-setup-gnome: fedora-setup _flatpak-install-gnome
