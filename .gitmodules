@@ -1,6 +1,3 @@
-[submodule "alacritty/.config/alacritty/themes/catppuccin"]
-	path = alacritty/.config/alacritty/themes/catppuccin
-	url = https://github.com/catppuccin/alacritty.git
 [submodule "neovim/.config/nvim"]
 	path = development/.config/nvim/nvim
 	url = https://github.com/Antonio-Rocchia/init.lua.git
