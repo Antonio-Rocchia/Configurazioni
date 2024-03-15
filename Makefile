@@ -22,7 +22,7 @@ config-restow:
 .PHONY: _dnf-setup-all
 
 _dnf-ensure-installed:
-	sudo dnf install \
+	sudo dnf install --assumeyes \
 		curl \
 		git \
 		gh \
@@ -31,7 +31,7 @@ _dnf-ensure-installed:
 		stow
 
 _dnf-install-neovim:
-	sudo dnf install \
+	sudo dnf install --assumeyes \
 		neovim \
 		g++ \
 		ripgrep \
