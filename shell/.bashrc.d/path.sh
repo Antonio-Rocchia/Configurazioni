@@ -1,16 +1,17 @@
 #!/bin/bash
 
-_add_usr_dirs_to_path() {
-  declare -ar user_path_dirs=(
-    "${HOME}/.local/bin/config_managed" \
-  )
-  for dir in "${user_path_dirs[@]}"; do
-    if ! [[ "${PATH}" =~ "${dir}" ]]; then
-      PATH="${dir}:${PATH}"
-    fi
-  done
+declare -a user_path_dirs=(
+  "${HOME}/.local/bin" \
+  "${HOME}/.local/bin/config_managed"
+)
 
-  export PATH
-}
+for dir in "${user_path_dirs[@]}"; do
+  if ! [[ "${PATH}" =~ "${dir}" ]]; then
+    PATH="${dir}:${PATH}"
+  fi
+done
 
-_add_usr_dirs_to_path
+unset user_path_dirs
+
+export PATH
+
