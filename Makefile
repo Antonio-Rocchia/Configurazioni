@@ -1,6 +1,10 @@
 all:
 	cat README.md | less
 
+#####################
+# CONFIG
+#	Manage dotiles using stow
+#####################
 .PHONY: config-stow
 .PHONY: config-unstow
 .PHONY: config-restow
@@ -17,8 +21,13 @@ config-restow:
 	stow --verbose --target $(HOME) --restow $(stow_packages)
 
 
+#####################
+# (PRIVATE) PACKAGE MANAGERS
+## (PRIVATE) DNF
+#	Install and remove software using a specific package manager
+#####################
 .PHONY: _dnf-ensure-installed
-.PHONY: _dnf-install-neovim
+.PHONY: _dnf-install-neovim-deps
 .PHONY: _dnf-setup-all
 
 _dnf-ensure-installed:
@@ -30,7 +39,7 @@ _dnf-ensure-installed:
 		bat \
 		stow
 
-_dnf-install-neovim:
+_dnf-install-neovim-deps:
 	sudo dnf install --assumeyes \
 		neovim \
 		g++ \
@@ -42,6 +51,10 @@ _dnf-setup-all: _dnf-ensure-installed _dnf-install-neovim
 	sudo dnf install --assumeyes \
 		alacritty
 
+#####################
+# (PRIVATE) FLATPAK
+#	Install and remove software using flatpak
+#####################
 .PHONY: _flatpak-install
 .PHONY: _flatpak-install-gnome
 
@@ -56,9 +69,29 @@ _flatpak-install-gnome: flatpak-install
 	flatpak install \
 		org.gnome.Extensions
 
-.PHONY: fedora-setup
-.PHONY: fedora-setup-gnome
+#####################
+# FILESYSTEM
+#	Create and delete folders
+#####################
+.PHONY: fs-create-all
+.PHONY: fs-clean-esperimenti
 
-fedora-setup-generic: _dnf-setup-all _flatpak-install
+fs-create-all: 
+	mkdir -p $(HOME)/Eseguibili \
+		$(HOME)/Sviluppo/{Codice,Strumenti} \
+		$(HOME)/Sviluppo/Codice/{Esperimenti,Progetti}
 
-fedora-setup-gnome: fedora-setup _flatpak-install-gnome
+fs-clean-esperimenti:
+	rm -rf $(HOME)/Sviluppo/Codice/Esperimenti/*
+
+
+#####################
+# SETUP
+#	Bootstrap the configuration of various OS using other targets
+#####################
+.PHONY: setup-fedora-generic
+.PHONY: setup-fedora-gnome
+
+setup-fedora-generic: _dnf-setup-all _flatpak-install
+
+setup-fedora-gnome: setup-fedora-generic _flatpak-install-gnome
