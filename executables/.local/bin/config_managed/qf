@@ -1,0 +1,124 @@
+#!/bin/bash
+# QuickFuzz ("qf") manages lists of input strings for custom commands. 
+# Each command generates its own list. The input string is selected using fzf.
+#
+# Author: Antonio Rocchia, https://github.com/Antonio-Rocchia
+
+set -e
+
+declare -a COMMANDS=(tmux)
+declare -r QUICKFUZZ_DIR="${HOME}/.local/share/quickfuzz/"
+
+
+if [[ -n $COMP_LINE ]]; then
+  read -r -a COMP_WORDS <<< "${COMP_LINE}"
+  if [[ "${#COMP_WORDS[@]}" -le 2 && "${3}" == "${1}" ]]; then
+    for cmd in "${COMMANDS[@]}"; do
+      [[ ${cmd:0:${#2}} == "${2,,}" ]] && echo "${cmd}"
+    done
+  fi
+  exit
+fi
+
+#######################################
+# Print usage message.
+# Arguments:
+#   None
+# Output:
+#   Write usage message to stdout
+#######################################
+# __help() {
+#
+# }
+
+#######################################
+# Print error message to stderr.
+# Arguments:
+#   Error message
+#   Try message (optional)
+#   Correction (optional)
+# Output:
+#   Write error message to stderr
+#######################################
+__err() {
+  local program_name
+  program_name=$(basename "${0}")
+  echo -e 1>&2 "${program_name}: error: ${1}. (See ${program_name} --help)"
+  if [[ -n "${2}" && -n "${3}" ]]; then
+    echo 1>&2 
+    echo -e 1>&2 "${2}: " 
+    echo -e 1>&2 "${3}" 
+  fi
+}
+
+#######################################
+# Check if string is the command list
+# Globals:
+#   COMMANDS
+# Argument:
+#   Cmd to match
+# Output:
+#   0 for success, non-zero otherwise
+#######################################
+__is_valid_command() {
+  for cmd in "${COMMANDS[@]}"; do
+    [[ "${cmd}" == "${1}" ]] && return 0
+  done
+  return 1
+}
+
+#######################################
+# Save string to the list for a custom command.
+# Arguments:
+#   Custom command (Must be an existing custom command)
+#   String
+# Output:
+#   0 for success, non-zero otherwise
+#######################################
+# __save_to_list() {
+#
+# }
+
+#######################################
+# Save string to the list for a custom command.
+# Arguments:
+#   Custom command (Must be an existing custom command)
+#   String
+# Output:
+#   0 for success, non-zero otherwise
+#######################################
+# __delete_from_list() {
+#
+# }
+
+
+[[ "$#" -eq 0 || "${1}" == "--help" ]] && __help && exit 0
+
+declare CMD="${1}"; shift 
+
+__is_valid_command "${CMD}" \
+  || (__err "'${CMD}' is not an available command" "The available commands are" "${COMMANDS[@]}" && exit 1) 
+
+if [[ "$#" -gt 0 ]]; then  
+  declare OP="${1}"; shift
+  case "${OP}" in
+    --save|-s)
+      [[ "$#" -eq 1 ]] \
+        || (__err "${CMD} ${OP} requires a string input" "Try" "${CMD} ${OP} [<string>]" && exit 1)
+      __save_to_list "${CMD}" "${1}" 
+      exit "$?"
+      ;;
+    --delete|-d)
+      __delete_from_list "${CMD}" 
+      exit "$?"
+      ;;
+    *)
+       __err "'${OP}' is not an available option" "The available options are" "--save -s\n--delete -d" && exit 1
+      ;;
+  esac
+fi
+
+for cmd in "${COMMANDS[@]}"; do
+  [[ "${cmd}" == "${CMD}" ]] && "_${CMD}" 
+  exit "$?"
+done
