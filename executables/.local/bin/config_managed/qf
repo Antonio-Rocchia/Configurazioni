@@ -6,9 +6,10 @@
 
 set -e
 
-declare -ar COMMANDS=(help tmux)
+declare -ar COMMANDS=(help tmux edit)
 declare -r QUICKFUZZ_DIR="${HOME}/.local/share/quickfuzz/"
-declare -r PROGRAM_NAME=$(basename "${0}")
+declare PROGRAM_NAME
+PROGRAM_NAME=$(basename "${0}")
 
 if [[ -n $COMP_LINE ]]; then
   read -r -a COMP_WORDS <<< "${COMP_LINE}"
@@ -63,6 +64,7 @@ usage: ${PROGRAM_NAME} [-h | --help] <command> [<args>]
 The available commands are:
 	help	Displays help message for a specific command
 	tmux	Bootstrap a new tmux session in a specified folder
+  edit  Quickly open a file or folder using your text editor
 
 Each command can be used with the following arguments:
 	[-h | --help]
@@ -107,6 +109,28 @@ Options:
 		Print the tmux's list
 EOF
       ;;
+    edit)
+        cat <<EOF && return 0
+usage: ${PROGRAM_NAME} edit [<args>]
+
+Description:
+  Open a file or folder using the default text editor.
+  By default it uses 'vi', but if \$EDITOR is set it will use it.
+
+Options:
+	[-h | --help]
+		Displays this help message
+
+	[(-s | --save)=<path>]
+		Save <path> to the edit's list only if its a path to a readable file or directory
+
+	[-d | --delete]
+		Delete <string> from the edit's list
+
+	[-l | --list]
+		Print the edit's list
+EOF
+      ;;
     *)
       __err "'help ${1}' is not available" "The available commands are" "$(IFS=" "; echo "${COMMANDS[@]}")" 
       return 1 
@@ -140,8 +164,9 @@ __is_valid_command() {
 #   Create QUICKFUZZ_DIR and command's list if not existent. return 0 for success, non-zero otherwise
 #######################################
 __init_cmd_list() {
-  mkdir -p "${QUICKFUZZ_DIR}" && touch -a "${QUICKFUZZ_DIR}/${1}" && return 0
-  return 1
+  mkdir -p "${QUICKFUZZ_DIR}" 
+  touch -a "${QUICKFUZZ_DIR}/${1}" 
+  return 0
 }
 
 #######################################
@@ -272,7 +297,72 @@ _tmux() {
   && tmux new-window -t "${selected_project_name}" -c "${selected_project}" -n shell \
   && tmux new-window -t "${selected_project_name}" -c "${selected_project}" -n git \
   && tmux select-window -t "${selected_project_name}":1
+}
 
+_edit() {
+  local cmd="${1}"; shift
+
+  if [[ "$#" -gt 0 ]]; then
+    local opt="${1}"; shift
+    case "${opt}" in
+      -h | --help)
+        __help "${cmd}"
+        return "$?"
+        ;;
+      -s | --save)
+        if [[ "$#" -ne 1 ]]; then 
+          __err "${PROGRAM_NAME} ${cmd} ${opt}=<path> requires an additional input" "Try" "\$ ${PROGRAM_NAME} ${cmd} ${opt} [<path>]" 
+          return 1
+        fi
+
+        local abs_path
+        abs_path=$(realpath "$1"); shift
+        # Command specific condition
+        if ! [[ -r "${abs_path}" && ( -d "${abs_path}" || -f "${abs_path}" ) ]]; then
+          __err "${PROGRAM_NAME} ${cmd} ${opt}=<path>" "Try" "\$ ${PROGRAM_NAME} ${cmd} ${opt} [<path>]" 
+          return 1
+        fi
+          
+        __save_to_list "${cmd}" "${abs_path}"
+        return "$?"
+        ;;
+      -d | --delete)
+        __delete_from_list "${cmd}"
+        return "$?"
+        ;;
+      -l | --list)
+        __print_cmd_list "${cmd}"
+        return "$?"
+        ;;
+      *)
+        __err "'${opt}' is not an available option" "The available options are" "[(-s | --save)=<path>]\n[-d | --delete]\n[-l | --list]"
+         return 1
+        ;;
+    esac
+  fi
+
+  # Custom command
+  __init_cmd_list "${cmd}"
+  local cmd_list="${QUICKFUZZ_DIR}/${cmd}" 
+
+  local selected_file
+  local old_dir
+  selected_file="$(fzf < "${cmd_list}")"
+  old_dir="${PWD}"
+
+  if [[ -d "${selected_file}" ]]; then
+    cd "${selected_file}" 
+  else
+    cd "$(realpath "$(dirname "${selected_file}")")"
+  fi
+  
+  if [[ -n "${EDITOR}" ]]; then
+    "${EDITOR}" "${selected_file}"
+  else
+    nano "${selected_file}"
+  fi
+
+  cd "${old_dir}"
 }
 
 [[ "$#" -eq 0 ]] && __help && exit 0
