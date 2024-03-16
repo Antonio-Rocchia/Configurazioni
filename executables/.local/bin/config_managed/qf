@@ -6,33 +6,31 @@
 
 set -e
 
-declare -a COMMANDS=(tmux)
+declare -ar COMMANDS=(help tmux)
 declare -r QUICKFUZZ_DIR="${HOME}/.local/share/quickfuzz/"
-
+declare -r PROGRAM_NAME=$(basename "${0}")
 
 if [[ -n $COMP_LINE ]]; then
   read -r -a COMP_WORDS <<< "${COMP_LINE}"
   if [[ "${#COMP_WORDS[@]}" -le 2 && "${3}" == "${1}" ]]; then
-    for cmd in "${COMMANDS[@]}"; do
-      [[ ${cmd:0:${#2}} == "${2,,}" ]] && echo "${cmd}"
-    done
+    compgen -W "$(printf '%s\n' "${COMMANDS[@]}")" -- "${2}"
+  elif [[ "${#COMP_WORDS[@]}" -le 3 && "${3}" == "help" ]]; then
+    # help is supposed to be the first element in COMMANDS
+    compgen -W "$(printf '%s\n' "${COMMANDS[@]:1}")" -- "${2}"
+  elif [[ "${#COMP_WORDS[@]}" -le 4 ]]; then
+    case "${3}" in
+      -s | --save)
+        compgen -f -- "${2}"
+        ;;
+    esac
   fi
   exit
 fi
 
 #######################################
-# Print usage message.
-# Arguments:
-#   None
-# Output:
-#   Write usage message to stdout
-#######################################
-# __help() {
-#
-# }
-
-#######################################
 # Print error message to stderr.
+# Globals:
+#   PROGRAM_NAME
 # Arguments:
 #   Error message
 #   Try message (optional)
@@ -41,14 +39,79 @@ fi
 #   Write error message to stderr
 #######################################
 __err() {
-  local program_name
-  program_name=$(basename "${0}")
-  echo -e 1>&2 "${program_name}: error: ${1}. (See ${program_name} --help)"
+  echo -e 1>&2 "${PROGRAM_NAME}: error: ${1}. (See ${PROGRAM_NAME} --help)"
   if [[ -n "${2}" && -n "${3}" ]]; then
     echo 1>&2 
     echo -e 1>&2 "${2}: " 
     echo -e 1>&2 "${3}" 
   fi
+}
+
+#######################################
+# Print usage message.
+# Globals:
+#   PROGRAM_NAME
+# Arguments:
+#   Command 
+# Output:
+#   Write usage message to stdout
+#######################################
+__help() {
+  [[ $# -eq 0 ]] && cat <<EOF && return 0
+usage: ${PROGRAM_NAME} [-h | --help] <command> [<args>]
+
+The available commands are:
+	help	Displays help message for a specific command
+	tmux	Bootstrap a new tmux session in a specified folder
+
+Each command can be used with the following arguments:
+	[-h | --help]
+		Displays a command specific help message
+
+	[(-s | --save)=<string>]
+		Save <string> to the command's list according to different validation rules
+
+	[-d | --delete]
+		Delete <string> from the command's list
+
+	[-l | --list]
+		Print the command's list
+
+Try: '${PROGRAM_NAME} help <command>' or '${PROGRAM_NAME} <command> [-h | --help]' for command specific help
+EOF
+  case "${1}" in
+    tmux)
+        cat <<EOF && return 0
+usage: ${PROGRAM_NAME} tmux [<args>]
+
+Description:
+  Bootstrap a new tmux session without attaching to it.
+
+  When selecting a saved directory:
+    - If the saved directory is within a Git repository, the program will show this directory.
+    - If the directory is not within a Git repository, the program will show any direct subdirectories that are Git repositories.
+
+  After selecting a directory the tmux session will be created only if is not already present.
+
+Options:
+	[-h | --help]
+		Displays this help message
+
+	[(-s | --save)=<path/to/dir>]
+		Save <path/to/dir> to the tmux's list only if its a path to a readable directory
+
+	[-d | --delete]
+		Delete <string> from the tmux's list
+
+	[-l | --list]
+		Print the tmux's list
+EOF
+      ;;
+    *)
+      __err "'help ${1}' is not available" "The available commands are" "$(IFS=" "; echo "${COMMANDS[@]}")" 
+      return 1 
+      ;;
+    esac
 }
 
 #######################################
@@ -68,6 +131,36 @@ __is_valid_command() {
 }
 
 #######################################
+# Initialize the QUICKFUZZ_DIR and the command's list before access
+# Globals:
+#   QUICKFUZZ_DIR
+# Arguments:
+#   Custom command
+# Output:
+#   Create QUICKFUZZ_DIR and command's list if not existent. return 0 for success, non-zero otherwise
+#######################################
+__init_cmd_list() {
+  mkdir -p "${QUICKFUZZ_DIR}" && touch -a "${QUICKFUZZ_DIR}/${1}" && return 0
+  return 1
+}
+
+#######################################
+# Print the content of the command's list
+# Globals:
+#   QUICKFUZZ_DIR
+# Arguments:
+#   Custom command
+# Output:
+#   Write the output of the command's list. return 0 for success, non-zero otherwise
+#######################################
+__print_cmd_list() {
+  __init_cmd_list "${1}" || return 1
+  local cmd_list="${QUICKFUZZ_DIR}/${1}" 
+  cat "${cmd_list}" && return 0
+  return 1
+}
+
+#######################################
 # Save string to the list for a custom command.
 # Arguments:
 #   Custom command (Must be an existing custom command)
@@ -75,50 +168,132 @@ __is_valid_command() {
 # Output:
 #   0 for success, non-zero otherwise
 #######################################
-# __save_to_list() {
-#
-# }
+__save_to_list() {
+  __init_cmd_list "${1}" || return 1
+  local cmd_list="${QUICKFUZZ_DIR}/${1}" 
+  local string="${2}"
+
+  if ! grep -Fxq "${string}" "${cmd_list}"; then
+    echo "${string}" >> "${cmd_list}"
+  fi
+  return 0
+}
 
 #######################################
 # Save string to the list for a custom command.
 # Arguments:
 #   Custom command (Must be an existing custom command)
-#   String
 # Output:
 #   0 for success, non-zero otherwise
 #######################################
-# __delete_from_list() {
-#
-# }
+__delete_from_list() {
+  __init_cmd_list "${1}"
+  local cmd_list="${QUICKFUZZ_DIR}/${1}" 
+  local string
+  local temp
 
+  temp=$(mktemp)
+  string="$(fzf < "${cmd_list}")"
 
-[[ "$#" -eq 0 || "${1}" == "--help" ]] && __help && exit 0
+  grep -v "${string}" "${cmd_list}" > "${temp}" && mv "${temp}" "${cmd_list}"
+  return 0
+}
 
-declare CMD="${1}"; shift 
+_help() {
+  __help "$@" 
+  return "$?"
+}
 
-__is_valid_command "${CMD}" \
-  || (__err "'${CMD}' is not an available command" "The available commands are" "${COMMANDS[@]}" && exit 1) 
+_tmux() {
+  local cmd="${1}"; shift
 
-if [[ "$#" -gt 0 ]]; then  
-  declare OP="${1}"; shift
-  case "${OP}" in
-    --save|-s)
-      [[ "$#" -eq 1 ]] \
-        || (__err "${CMD} ${OP} requires a string input" "Try" "${CMD} ${OP} [<string>]" && exit 1)
-      __save_to_list "${CMD}" "${1}" 
-      exit "$?"
-      ;;
-    --delete|-d)
-      __delete_from_list "${CMD}" 
-      exit "$?"
-      ;;
-    *)
-       __err "'${OP}' is not an available option" "The available options are" "--save -s\n--delete -d" && exit 1
-      ;;
-  esac
-fi
+  if [[ "$#" -gt 0 ]]; then
+    local opt="${1}"; shift
+    case "${opt}" in
+      -h | --help)
+        __help "${cmd}"
+        return "$?"
+        ;;
+      -s | --save)
+        if [[ "$#" -ne 1 ]]; then 
+          __err "${PROGRAM_NAME} ${cmd} ${opt}=<path/to/dir> requires an additional input" "Try" "\$ ${PROGRAM_NAME} ${cmd} ${opt} [<path/to/dir>]" 
+          return 1
+        fi
+
+        local abs_path
+        abs_path=$(realpath "$1"); shift
+        # Command specific condition
+        if ! [[ -d "${abs_path}" && -r "${abs_path}" ]]; then
+          __err "${PROGRAM_NAME} ${cmd} ${opt}=<path/to/dir> " "Try" "\$ ${PROGRAM_NAME} ${cmd} ${opt} [<path/to/dir>]" 
+          return 1
+        fi
+          
+        __save_to_list "${cmd}" "${abs_path}"
+        return "$?"
+        ;;
+      -d | --delete)
+        __delete_from_list "${cmd}"
+        return "$?"
+        ;;
+      -l | --list)
+        __print_cmd_list "${cmd}"
+        return "$?"
+        ;;
+      *)
+        __err "'${opt}' is not an available option" "The available options are" "[(-s | --save)=<path/to/dir>]\n[-d | --delete]\n[-l | --list]"
+         return 1
+        ;;
+    esac
+  fi
+
+  # Custom command
+  __init_cmd_list "${cmd}"
+  local cmd_list="${QUICKFUZZ_DIR}/${cmd}" 
+
+  local -a projects
+  while IFS= read -r path; do
+    if git -C "${path}" rev-parse &>/dev/null; then
+      projects+=("${path}")
+    else
+      for subdir in "${path}"/*/; do
+        if git -C "${subdir}" rev-parse &>/dev/null; then
+          projects+=("${subdir}")
+        fi
+      done
+    fi
+  done < "${cmd_list}"
+
+  local selected_project
+  local selected_project_name
+  selected_project="$(printf "%s\n" "${projects[@]}" | fzf)"
+  selected_project_name="$(basename "${selected_project}")"
+
+  tmux new-session -d -s "${selected_project_name}" -c "${selected_project}" -n edit \
+  && tmux new-window -t "${selected_project_name}" -c "${selected_project}" -n shell \
+  && tmux new-window -t "${selected_project_name}" -c "${selected_project}" -n git \
+  && tmux select-window -t "${selected_project_name}":1
+
+}
+
+[[ "$#" -eq 0 ]] && __help && exit 0
+
+case "${1}" in
+  --help | -h)
+    __help 
+    exit 0
+    ;;
+  *)
+    declare CMD="${1}"; shift 
+    if ! __is_valid_command "${CMD}"; then
+      __err "'${CMD}' is not an available command" "The available commands are" "$(IFS=" "; echo "${COMMANDS[@]}")" 
+      exit 1 
+    fi
+esac
 
 for cmd in "${COMMANDS[@]}"; do
-  [[ "${cmd}" == "${CMD}" ]] && "_${CMD}" 
-  exit "$?"
+  if [[ "${cmd}" == "${CMD}" ]]; then
+    "_${CMD}" "${CMD}" "$@" 
+    exit "$?"
+  fi
 done
+
