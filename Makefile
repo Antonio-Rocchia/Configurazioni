@@ -2,26 +2,6 @@ all:
 	cat README.md | less
 
 #####################
-# CONFIG
-#	Manage dotiles using stow
-#####################
-.PHONY: config-stow
-.PHONY: config-unstow
-.PHONY: config-restow
-
-stow_packages = $(wildcard */)
-
-config-stow:
-	stow --verbose --target $(HOME) --stow $(stow_packages)
-
-config-unstow:
-	stow --verbose --target $(HOME) --delete $(stow_packages)
-
-config-restow:
-	stow --verbose --target $(HOME) --restow $(stow_packages)
-
-
-#####################
 # (PRIVATE) PACKAGE MANAGERS
 ## (PRIVATE) DNF
 #	Install and remove software using a specific package manager
@@ -34,10 +14,10 @@ _dnf-ensure-installed:
 	sudo dnf install --assumeyes \
 		curl \
 		git \
-		gh \
 		flatpak \
-		bat \
-		stow
+		pipewire \
+		pipewire-plugin-libcamera \
+		make 
 
 _dnf-install-neovim-deps:
 	sudo dnf install --assumeyes \
@@ -47,9 +27,13 @@ _dnf-install-neovim-deps:
 		fd-find \
 		fzf
 
-_dnf-setup-all: _dnf-ensure-installed _dnf-install-neovim
+_dnf-setup-all: _dnf-ensure-installed _dnf-install-neovim-deps
 	sudo dnf install --assumeyes \
-		alacritty
+		alacritty \
+		gh \
+		bat \
+		stow \
+		default-fonts \
 
 #####################
 # (PRIVATE) FLATPAK
@@ -59,16 +43,17 @@ _dnf-setup-all: _dnf-ensure-installed _dnf-install-neovim
 .PHONY: _flatpak-install-gnome
 
 _flatpak-install:
-	flatpak install --assumeyes --noninteractive \
-		com.discordapp.Discord \
-		com.spotify.Client \
-		com.github.tchx84.Flatseal \
-		org.gimp.GIMP \
-		org.gnome.World.PikaBackup
+	flatpak remote-add --if-not-exists --prio=2 --subset=verified flathub-verified https://flathub.org/repo/flathub.flatpakrepo
+	flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+	flatpak install --assumeyes --noninteractive com.discordapp.Discord 
+	flatpak install --assumeyes --noninteractive com.spotify.Client 
+	flatpak install --assumeyes --noninteractive com.github.tchx84.Flatseal 
+	flatpak install --assumeyes --noninteractive org.gimp.GIMP 
+	flatpak install --assumeyes --noninteractive org.gnome.World.PikaBackup
+	flatpak install --assumeyes --noninteractive org.mozilla.firefox
 
 _flatpak-install-gnome: flatpak-install
-	flatpak install \
-		org.gnome.Extensions
+	flatpak install --assumeyes --noninteractive org.gnome.Extensions
 
 #####################
 # FILESYSTEM
@@ -92,7 +77,24 @@ fs-clean-esperimenti:
 #####################
 .PHONY: setup-fedora-generic
 .PHONY: setup-fedora-gnome
+.PHONY: setup-fedora-minimal
 
 setup-fedora-generic: _dnf-setup-all _flatpak-install
 
 setup-fedora-gnome: setup-fedora-generic _flatpak-install-gnome
+
+setup-fedora-hyprland: _dnf-setup-all _flatpak-install
+	sudo dnf install --assumeyes \
+		xdg-utils \
+		xdg-user-dirs \
+		dunst \
+		polkit-kde \
+		hyprland \
+		sddm 
+	systemctl --user --now enable pipewire
+	systemctl --user --now enable pipewire-pulse.service
+	systemctl --user --now enable wireplumber
+	sudo systemctl set-default graphical.target
+	sudo systemctl enable sddm
+	grep 'ExecStart=' /etc/systemd/system/display-manager.service
+
