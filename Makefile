@@ -94,7 +94,10 @@ setup-fedora-hyprland: _dnf-setup-all _flatpak-install
 		dunst \
 		polkit-kde \
 		hyprland \
-		sddm 
+		sddm \
+		default-fonts \
+		kanshi \
+		waybar 
 	systemctl --user --now enable pipewire
 	systemctl --user --now enable pipewire-pulse.service
 	systemctl --user --now enable wireplumber
