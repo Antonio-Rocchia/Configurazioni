@@ -23,6 +23,7 @@ _dnf-install-neovim-deps:
 	sudo dnf install --assumeyes \
 		neovim \
 		g++ \
+		cmake \
 		ripgrep \
 		fd-find \
 		fzf
@@ -45,12 +46,13 @@ _dnf-setup-all: _dnf-ensure-installed _dnf-install-neovim-deps
 _flatpak-install:
 	flatpak remote-add --if-not-exists --prio=2 --subset=verified flathub-verified https://flathub.org/repo/flathub.flatpakrepo
 	flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-	flatpak install --assumeyes --noninteractive com.discordapp.Discord 
+	flatpak install --assumeyes --noninteractive io.github.spacingbat3.webcord
 	flatpak install --assumeyes --noninteractive com.spotify.Client 
 	flatpak install --assumeyes --noninteractive com.github.tchx84.Flatseal 
 	flatpak install --assumeyes --noninteractive org.gimp.GIMP 
 	flatpak install --assumeyes --noninteractive org.gnome.World.PikaBackup
 	flatpak install --assumeyes --noninteractive org.mozilla.firefox
+	flatpak install --assumeyes --noninteractive org.gnome.Evince
 
 _flatpak-install-gnome: flatpak-install
 	flatpak install --assumeyes --noninteractive org.gnome.Extensions
@@ -87,6 +89,8 @@ setup-fedora-hyprland: _dnf-setup-all _flatpak-install
 	sudo dnf install --assumeyes \
 		xdg-utils \
 		xdg-user-dirs \
+		cmake \
+		meson \
 		dunst \
 		polkit-kde \
 		hyprland \
