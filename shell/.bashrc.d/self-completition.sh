@@ -7,7 +7,7 @@ declare script
 
 for file in "${HOME}"/.local/bin/config_managed/**/*; do
   script=$(basename "${file}")
-  complete -C "${script}" "${script}"
+  complete -o filenames -C "${script}" "${script}"
 done
 
 unset script
