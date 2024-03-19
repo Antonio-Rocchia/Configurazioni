@@ -8,8 +8,7 @@ export EDITOR=/usr/bin/nvim
 #############################
 declare -a user_path_dirs=(
   "${HOME}/.local/bin" \
-  "${HOME}/.local/bin/config_managed" \
-  "${HOME}/.local/bin/config_managed/scripts" 
+  "${HOME}/.local/bin/scripts" 
 )
 
 for dir in "${user_path_dirs[@]}"; do
