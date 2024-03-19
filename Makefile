@@ -97,7 +97,8 @@ setup-fedora-hyprland: _dnf-setup-all _flatpak-install
 		sddm \
 		default-fonts \
 		kanshi \
-		waybar 
+		waybar \
+		pavucontrol
 	systemctl --user --now enable pipewire
 	systemctl --user --now enable pipewire-pulse.service
 	systemctl --user --now enable wireplumber
