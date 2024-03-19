@@ -2,5 +2,5 @@
 	path = development/.config/nvim
 	url = https://github.com/Antonio-Rocchia/Neovim-config.git
 [submodule "Scripts"]
-	path = executables/.local/bin/config_managed/scripts
+	path = shell/.local/bin/scripts
 	url = https://github.com/Antonio-Rocchia/Scripts.git
