@@ -2,7 +2,7 @@ import = ["~/.config/alacritty/themes/tokyonight/tokyonight_night.toml"]
 
 [window]
 padding = { x = 5, y = 10 }
-opacity = 0.95
+opacity = 0.90
 
 [cursor.style]
 shape = "Beam"

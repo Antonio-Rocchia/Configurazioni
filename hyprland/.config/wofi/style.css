@@ -1,0 +1,41 @@
+window {
+  margin: 0px;
+  border: 1px solid rgb(192, 201, 192);
+  border-radius: 15px;
+  background-color: rgb(64, 73, 66);
+  background-color: rgb(17, 20, 17);
+}
+
+#input {
+  margin: 16px 16px 8px 16px;
+  border: none;
+  color: rgb(225, 227, 222);
+  background-color: rgb(25, 28, 26);
+}
+
+#inner-box {
+  margin: 8px 16px 16px 16px;
+  border: none;
+  background-color: rgb(29, 32, 29);
+}
+
+#outer-box {
+  margin: 5px;
+  border: none;
+  background-color: rgb(17, 20, 17);
+}
+
+#scroll {
+  margin: 0px;
+  border: none;
+}
+
+#text {
+  margin: 5px;
+  border: none;
+  color: rgb(225, 227, 222);
+}
+
+#entry:selected {
+  background-color: rgb(64, 73, 66);
+}

@@ -55,7 +55,6 @@ window#waybar {
   padding-left: 8px;
 }
 
-
 #custom-power {
   color: rgb(250, 125, 125);
 }
@@ -70,6 +69,11 @@ window#waybar {
 
 #battery.critical {
   color: rgb(156, 86, 86);
+}
+
+#tray {
+  padding: 0 16px;
+  border-right: 1px solid rgb(39, 43, 40);
 }
 
 

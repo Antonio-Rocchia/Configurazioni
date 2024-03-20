@@ -1,0 +1,64 @@
+* {
+  font-family: "Noto Sans";
+  background-image: none;
+  transition: 20ms;
+  box-shadow: none;
+}
+
+window {
+  background-color: rgba(17, 20, 17, 0.8);
+}
+
+button {
+  color: rgb(192, 201, 192);
+  font-size: 18px;
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 15%;
+
+  background-color: rgba(64, 73, 66, 0.8);
+  border: 3px solid rgb(192, 201, 192);
+}
+
+/* 
+----------------------------------------------------- 
+Buttons
+----------------------------------------------------- 
+*/
+
+#lock {
+  margin: 10px;
+  border-radius: 20px;
+  background-image: image(url("icons/lock.png"));
+}
+
+#logout {
+  margin: 10px;
+  border-radius: 20px;
+  background-image: image(url("icons/logout.png"));
+}
+
+#suspend {
+  margin: 10px;
+  border-radius: 20px;
+  background-image: image(url("icons/suspend.png"));
+}
+
+#hibernate {
+  margin: 10px;
+  border-radius: 20px;
+  background-image: image(url("icons/hibernate.png"));
+}
+
+#shutdown {
+  margin: 10px;
+  border-radius: 20px;
+  background-image: image(url("icons/shutdown.png"));
+}
+
+#reboot {
+  margin: 10px;
+  border-radius: 20px;
+  background-image: image(url("icons/reboot.png"));
+}

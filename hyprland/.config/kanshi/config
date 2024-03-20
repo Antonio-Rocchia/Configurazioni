@@ -6,3 +6,8 @@ profile workstation {
 	output HDMI-A-2 enable mode 2560x1440 scale 1
 	output eDP-1 disable
 }
+
+profile dual {
+	output HDMI-A-2 enable mode 2560x1440 scale 1
+	output eDP-1 enable mode 1920x1080 scale 1
+}
