@@ -12,9 +12,12 @@
   ],
   "modules-right": [
     "tray",
+    "hyprland/language",
     "network",
     "privacy",
     "wireplumber",
+    "idle_inhibitor",
+    "temperature",
     "battery",
     "custom/power",
   ],
@@ -43,12 +46,12 @@
     "tooltip-format": "{capacity}% - {timeTo}"
   },
   "wireplumber": {
-    "format": "{icon}",
+    "format": "{volume}% {icon}",
     "tooltip": true,
     "tooltip-format": "Volume: {volume}%",
     "format-muted": "",
     "format-icons": " ",
-    "on-click": "pavucontrol",
+    "on-click": "flatpak run org.pulseaudio.pavucontrol",
   },
   "privacy": {
     "icon-spacing": 4,
@@ -86,4 +89,24 @@
     "tooltip-format-disconnected": "Disconnected",
     "max-length": 50,
   },
+  "hyprland/language": {
+    "format": "{}",
+    "format-en": "en",
+    "format-it": "it",
+  },
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+        "activated": "",
+        "deactivated": ""
+    },
+    "tooltip-format-activated": "Caffeine: {status}",
+    "tooltip-format-deactivated": "Caffeine: {status}",
+  },
+  "temperature": {
+    "thermal-zone": 0,
+    "critical-threshold": 80,
+    "format": "",
+    "tooltip-format": "CPU :{temperatureC}°C"
+  }
 }

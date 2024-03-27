@@ -76,6 +76,13 @@ window#waybar {
   border-right: 1px solid rgb(39, 43, 40);
 }
 
+#temperature {
+  color: rgb(112, 156, 86);
+}
+
+#temperature.critical {
+  color: rgb(156, 86, 86);
+}
 
 /* --color-primary: rgb(187 249 206); */
 /* --color-surface-tint: rgb(151 212 171); */

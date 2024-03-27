@@ -1,38 +1,33 @@
 {
   "label": "shutdown",
   "action": "systemctl poweroff",
-  "text": "Shutdown",
-  "keybind": "s",
-}
-{
-  "label": "reboot",
-  "action": "systemctl reboot",
-  "text": "Reboot",
-  "keybind": "r",
-}
-{
-  "label": "logout",
-  "action": "loginctl kill-user $USER",
-  "text": "Exit",
-  "keybind": "e",
+  "text": "Arresta",
 }
 {
   "label": "hibernate",
   "action": "systemctl hibernate",
-  "text": "Hibernate",
-  "keybind": "h",
+  "text": "Iberna",
 }
+{
+  "label": "reboot",
+    "action": "systemctl reboot",
+    "text": "Riavvia",
+}
+
 {
   "label": "suspend",
   "action": "systemctl suspend",
-  "text": "Suspend",
-  "keybind": "u",
+  "text": "Sospendi",
+}
+{
+  "label": "logout",
+  "action": "loginctl kill-user $USER",
+  "text": "Termina sessione",
 }
 {
   "label": "lock",
-  "action": "swaylock",
-  "text": "Lock",
-  "keybind": "l",
+  "action": "swaylock --daemonize",
+  "text": "Blocco schermo",
 }
 
 
