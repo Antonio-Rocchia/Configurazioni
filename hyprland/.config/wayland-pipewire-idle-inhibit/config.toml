@@ -1,0 +1,5 @@
+verbosity = "OFF"
+media_minimum_duration = 5
+idle_inhibitor = "wayland"
+[[node_blacklist]]
+name = [Ss]potify
