@@ -12,7 +12,7 @@
   ],
   "modules-right": [
     "tray",
-    "hyprland/language",
+    // "hyprland/language",
     "network",
     "privacy",
     "wireplumber",
