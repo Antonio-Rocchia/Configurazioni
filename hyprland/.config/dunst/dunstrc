@@ -1,16 +1,24 @@
 [global]
-frame_color = "#89B4FA"
-separator_color= frame
+monitor = 0
+follow = mouse
+
+width = (300,500)
+height = 500
+offset = 16x16
+origin = top-right
+gap_size = 3
+
+font = RobotoMono Nerd Font Medium 10  
 
 [urgency_low]
-background = "#1E1E2E"
-foreground = "#CDD6F4"
+background = "#323632"
+foreground = "#e1e3de"
 
 [urgency_normal]
-background = "#1E1E2E"
-foreground = "#CDD6F4"
+background = "#323632"
+foreground = "#e1e3de"
 
 [urgency_critical]
-background = "#1E1E2E"
-foreground = "#CDD6F4"
-frame_color = "#FAB387"
+background = "#323632"
+foreground = "#e1e3de"
+frame_color = "#ffb4ab"
