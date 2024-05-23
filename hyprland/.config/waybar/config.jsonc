@@ -52,6 +52,7 @@
     "format-muted": "",
     "format-icons": " ",
     "on-click": "flatpak run org.pulseaudio.pavucontrol",
+    "on-click-right": "easyeffects"
   },
   "privacy": {
     "icon-spacing": 4,
