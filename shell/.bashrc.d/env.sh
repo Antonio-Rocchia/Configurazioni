@@ -10,7 +10,6 @@ export EDITOR=/usr/bin/nvim
 declare -a user_path_dirs=(
   "${HOME}/.local/bin" \
   "${HOME}/.local/bin/scripts" \
-  "${HOME}/.cargo/bin" # Rustup
 )
 
 for dir in "${user_path_dirs[@]}"; do
