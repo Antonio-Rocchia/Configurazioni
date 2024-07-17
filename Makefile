@@ -54,36 +54,14 @@ _flatpak-install:
 	flatpak install --assumeyes --noninteractive org.mozilla.firefox
 	flatpak install --assumeyes --noninteractive org.gnome.Evince
 
-_flatpak-install-gnome: flatpak-install
-	flatpak install --assumeyes --noninteractive org.gnome.Extensions
-
 #####################
-# FILESYSTEM
-#	Create and delete folders
-#####################
-.PHONY: fs-create-all
-.PHONY: fs-clean-esperimenti
-
-fs-create-all: 
-	mkdir -p $(HOME)/Eseguibili \
-		$(HOME)/Sviluppo/{Codice,Strumenti} \
-		$(HOME)/Sviluppo/Codice/{Esperimenti,Progetti}
-
-fs-clean-esperimenti:
-	rm -rf $(HOME)/Sviluppo/Codice/Esperimenti/*
-
-
-#####################
-# SETUP
-#	Bootstrap the configuration of various OS using other targets
-#####################
-.PHONY: setup-fedora-generic
-.PHONY: setup-fedora-gnome
+.PHONY: setup-fedora
+.PHONY: setup-fedora-no-flatpak
 .PHONY: setup-fedora-minimal
 
-setup-fedora-generic: _dnf-setup-all _flatpak-install
+setup-fedora: _dnf-setup-all _flatpak-install
 
-setup-fedora-gnome: setup-fedora-generic _flatpak-install-gnome
+setup-fedora-no-flatpak: _dnf-setup-all
 
 setup-fedora-hyprland: _dnf-setup-all _flatpak-install
 	sudo dnf install --assumeyes \
