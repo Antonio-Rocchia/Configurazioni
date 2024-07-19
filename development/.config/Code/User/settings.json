@@ -1,9 +1,0 @@
-{
-    "window.dialogStyle": "custom",
-    "window.titleBarStyle": "custom",
-    "editor.fontFamily": "'Roboto Mono', 'monospace', monospace",
-    "keyboard.dispatch": "keyCode",
-    "vim.highlightedyank.enable": true,
-    "editor.lineNumbers": "relative",
-    "window.zoomLevel": 1
-}
