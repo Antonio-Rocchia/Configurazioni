@@ -4,7 +4,7 @@
 
 declare script
 
-for file in "${HOME}"/.local/bin/scripts/*; do
+for file in "${HOME}"/.local/hacks/*; do
   script=$(basename "${file}")
   complete -o filenames -C "${script}" "${script}"
 done

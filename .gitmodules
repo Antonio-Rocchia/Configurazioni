@@ -1,6 +1,6 @@
-[submodule "Neovim"]
-	path = development/.config/nvim
+[submodule "hacks/.local/hacks"]
+	path = hacks/.local/hacks
+	url = https://github.com/Antonio-Rocchia/Hacks.git
+[submodule "neovim/.config/nvim"]
+	path = neovim/.config/nvim
 	url = https://github.com/Antonio-Rocchia/Neovim-config.git
-[submodule "scripts/.local/bin"]
-	path = scripts/.local/bin
-	url = https://github.com/Antonio-Rocchia/Scripts.git
