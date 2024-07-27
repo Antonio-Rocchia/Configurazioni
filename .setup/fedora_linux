@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Manage fedora workstation repositories
+sudo dnf config-manager --set-disabled copr:copr.fedorainfracloud.org:phracek:PyCharm
+sudo dnf config-manager --set-enabled google-chrome rpmfusion-nonfree-nvidia-driver rpmfusion-nonfree-steam
+
+sudo dnf install --assumeyes \
+	make \
+	bat \
+	stow \
+	default-fonts \
+	alacritty \
+	google-chrome-stable
+
+# Install neovim and its dependecies
+sudo dnf install --assumeyes \
+	neovim \
+	g++ \
+	cmake \
+	ripgrep \
+	fd-find \
+	fzf 
+
