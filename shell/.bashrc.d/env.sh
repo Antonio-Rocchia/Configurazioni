@@ -2,6 +2,7 @@
 # shellcheck disable=2076
 
 export EDITOR=/usr/bin/nvim
+export CONFIGURAZIONI="$HOME/Configurazioni"
 
 
 #############################

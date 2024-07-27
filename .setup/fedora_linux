@@ -1,9 +1,13 @@
 #!/bin/bash
 
 # Manage fedora workstation repositories
+echo "Running setup script for fedora linux..."
+
+echo "Configuring dnf repositories..."
 sudo dnf config-manager --set-disabled copr:copr.fedorainfracloud.org:phracek:PyCharm
 sudo dnf config-manager --set-enabled google-chrome rpmfusion-nonfree-nvidia-driver rpmfusion-nonfree-steam
 
+echo "Installing software via dnf..."
 sudo dnf install --assumeyes \
 	make \
 	bat \
@@ -21,3 +25,13 @@ sudo dnf install --assumeyes \
 	fd-find \
 	fzf 
 
+echo "Creating template files..."
+touch "$(xdg-user-dir TEMPLATES)"/{markdown.md,new_file,new_script.sh,text.txt}
+
+# fzf on Fedora
+echo "Enabling fzf keymaps in bash via .bashrc..."
+fzf_source_keymaps='if [ -x "$(command -v fzf)"  ]; then source /usr/share/fzf/shell/key-bindings.bash; fi'
+
+grep -Fxq "${fzf_source_keymaps}" "$HOME/.bashrc" || echo "${fzf_source_keymaps}" >> "$HOME/.bashrc" 
+
+unset fzf_source_keymaps
