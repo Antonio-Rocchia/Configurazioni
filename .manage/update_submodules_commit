@@ -1,0 +1,6 @@
+#!/bin/bash
+
+git reset -q
+git submodule status | awk '/^.+\+/ { print $2 }' | xargs --no-run-if-empty git add
+git diff --staged --quiet || ( git commit -m "Update submodules to lastest commit" && git push )
+
