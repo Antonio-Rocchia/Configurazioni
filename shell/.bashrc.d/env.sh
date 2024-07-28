@@ -2,7 +2,9 @@
 # shellcheck disable=2076
 
 export EDITOR=/usr/bin/nvim
+
 export CONFIGURAZIONI="$HOME/Configurazioni"
+export CHESS_HOME="$(xdg-user-dir DOCUMENTS)/Scacchi"
 
 
 #############################
