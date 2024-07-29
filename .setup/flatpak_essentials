@@ -1,6 +1,0 @@
-#!/bin/bash
-
-flatpak install --assumeyes --noninteractive flathub \
-	com.spotify.Client \
-	org.gnome.World.PikaBackup \
-
