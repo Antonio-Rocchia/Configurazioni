@@ -32,3 +32,8 @@
     no_extra_spaces: true
   loop: '{{ dnf_enable_repos }}'
 
+- name: Update the system
+  become: true
+  ansible.builtin.dnf:
+    name: '*'
+    state: latest
