@@ -1,0 +1,10 @@
+dnf_disable_repo_list:
+  - copr:copr.fedorainfracloud.org:phracek:PyCharm
+
+dnf_enable_repo_list:
+  - fedora
+  - fedora-cisco-openh264
+  - google-chrome
+  - rpmfusion-nonfree-nvidia-driver
+  - rpmfusion-nonfree-steam
+  - updates

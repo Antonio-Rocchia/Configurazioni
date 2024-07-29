@@ -1,0 +1,14 @@
+---
+# - name: Disable dnf repositories
+#   become: true
+#   community.general.dnf_config_manager:
+#     name: '{{ item }}'
+#     state: disabled
+#   loop: '{{ dnf_disable_repo_list }}'
+
+- name: Enable dnf repositories
+  become: true
+  community.general.dnf_config_manager:
+    name: '{{ item }}'
+    state: disabled
+  loop: '{{ dnf_enable_repo_list }}'
