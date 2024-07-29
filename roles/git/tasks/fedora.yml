@@ -1,5 +1,6 @@
 ---
 - name: Install github cli
+  become: true
   ansible.builtin.dnf:
     name: gh
     state: latest
