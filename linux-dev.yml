@@ -1,15 +1,6 @@
 ---
-- name: Configure development environment
+- name: Configure the system
   hosts: all
-  tasks: 
-     - name: Classify hosts depending on their OS distribution
-       group_by:
-         key: os_{{ ansible_facts['distribution'] }}
-
-- hosts: os_Fedora
   roles:
-  - dnf
-
-- hosts: all
-  roles:
-    - linux-cli-tools
+    - package-manager
+    - git

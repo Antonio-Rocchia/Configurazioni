@@ -1,7 +1,0 @@
----
-- name: Install useful cli utilities using dnf
-  become: true
-  ansible.builtin.dnf:
-    name: '{{ item }}'
-    state: latest
-  loop: '{{ linux_cli_tools_from_dnf }}'

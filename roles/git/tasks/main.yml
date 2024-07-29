@@ -1,0 +1,13 @@
+---
+- name: Install git utilities
+  block:
+    - ansible.builtin.include_tasks: 'fedora.yml'
+  when: ansible_distribution | lower == 'fedora'
+  tags: devel
+
+- name: Install .gitconfig file
+  ansible.builtin.copy:
+    src: .gitconfig
+    dest: '{{ local_home_path }}/.gitconfig'
+    force: false
+    mode: 0644

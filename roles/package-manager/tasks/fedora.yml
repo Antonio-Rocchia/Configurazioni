@@ -1,0 +1,17 @@
+---
+- name: Enable repositories
+  become: true
+  community.general.dnf_config_manager:
+    name: '{{ item.repo }}'
+    state: '{{ item.status }}'
+  loop: '{{ dnf_repos_status }}'
+  environment:
+    # Necessary because dnf config-manager uses the LC_* to print in a language
+    # This breaks the module
+    LC_ALL: en
+
+- name: Update system 
+  become: true
+  ansible.builtin.dnf:
+    name: '*'
+    state: latest

@@ -1,0 +1,7 @@
+---
+- name: Configure package manager
+  block:
+    - ansible.builtin.include_vars: 'fedora.yml'
+    - ansible.builtin.include_tasks: 'fedora.yml'
+  when: ansible_distribution | lower == 'fedora'
+
