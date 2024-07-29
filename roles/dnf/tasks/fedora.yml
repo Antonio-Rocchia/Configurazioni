@@ -1,14 +1,34 @@
 ---
-# - name: Disable dnf repositories
-#   become: true
-#   community.general.dnf_config_manager:
-#     name: '{{ item }}'
-#     state: disabled
-#   loop: '{{ dnf_disable_repo_list }}'
+- name: Delete listed dnf repositories
+  become: true
+  ansible.builtin.file:
+    path: '/etc/yum.repos.d/{{ item }}.repo'
+    state: absent
+  loop: '{{ dnf_delete_repos }}'
 
+# Repositories are ini files, each file may contain more than one repository in different sections
+# A value of 0 means disabled
+- name: Disable dnf repositories
+  become: true
+  community.general.ini_file:
+    path: '/etc/yum.repos.d/{{ item.filename }}.repo'
+    create: false
+    section: '{{ item.repository }}'
+    option: enabled
+    value: 0
+    no_extra_spaces: true
+  loop: '{{ dnf_disable_repos }}'
+
+# Repositories are ini files, each file may contain more than one repository in different sections
+# A value of 1 means enabled
 - name: Enable dnf repositories
   become: true
-  community.general.dnf_config_manager:
-    name: '{{ item }}'
-    state: disabled
-  loop: '{{ dnf_enable_repo_list }}'
+  community.general.ini_file:
+    path: '/etc/yum.repos.d/{{ item.filename }}.repo'
+    create: false
+    section: '{{ item.repository }}'
+    option: enabled
+    value: 1
+    no_extra_spaces: true
+  loop: '{{ dnf_enable_repos }}'
+
