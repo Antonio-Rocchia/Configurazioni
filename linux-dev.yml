@@ -9,3 +9,7 @@
 - hosts: os_Fedora
   roles:
   - dnf
+
+- hosts: all
+  roles:
+    - linux-cli-tools

@@ -1,0 +1,2 @@
+local_bin_path: "/home/{{ lookup('env', 'USER') }}/.local/bin"
+

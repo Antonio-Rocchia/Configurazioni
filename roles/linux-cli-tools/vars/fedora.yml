@@ -1,0 +1,28 @@
+linux_cli_tools_from_dnf:
+  # BEGIN: Secure boot certificates utils
+  - kmodtool
+  - akmods
+  - mokutil
+  - openssl
+  # END: Secure boot certificate utils
+  - make
+  - bat
+  - tmux
+  - fzf
+  - flatpak
+  - gh
+
+# Each enty must contain
+  # user: username of the owner of the github repository
+  # repo: name or the github repository
+  # asset_substring: a string that differentiates the release you want to download from others
+  # executable: name of the file to be extracted
+linux_cli_tools_from_github_releases:
+  - user: jesseduffield
+    repo: lazygit
+    asset_substring: Linux_x86_64.tar.gz
+    executable: lazygit
+  - user: gohugoio
+    repo: hugo
+    asset_substring: Linux-64bit.tar.gz
+    executable: hugo
