@@ -1,6 +1,0 @@
-[submodule "hacks/.local/hacks"]
-	path = hacks/.local/hacks
-	url = https://github.com/Antonio-Rocchia/Hacks.git
-[submodule "neovim/.config/nvim"]
-	path = neovim/.config/nvim
-	url = https://github.com/Antonio-Rocchia/Neovim-config.git
