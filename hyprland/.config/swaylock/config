@@ -1,6 +1,0 @@
-indicator-caps-lock
-indicator-idle-visible
-show-keyboard-layout
-image="${HOME}"/.config/swaybg_wallpaper
-
-indicator-thickness=5

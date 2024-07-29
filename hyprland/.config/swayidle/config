@@ -1,4 +1,0 @@
-timeout 300 'swaylock --daemonize'
-timeout 330 'hyprctl dispatch dpms off && brightnessctl --device=asus::kbd_backlight set 0' resume 'hyprctl dispatch dpms on'
-timeout 600 'systemctl suspend'
-before-sleep 'swaylock --daemonize'
