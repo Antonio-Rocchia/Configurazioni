@@ -7,5 +7,5 @@
 
 - name: Install my hacks script repo
   ansible.builtin.git:
-    repo: '{{ neovim_config_repo }}'
+    repo: '{{ hacks_repo }}'
     dest: '/home/{{ user }}/.local/hacks'
