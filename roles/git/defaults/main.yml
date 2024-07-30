@@ -1,2 +1,0 @@
-local_home_path: "/home/{{ lookup('env', 'USER') }}"
-local_bin_path: "/home/{{ lookup('env', 'USER') }}/.local/bin"

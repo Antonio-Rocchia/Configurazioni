@@ -1,6 +1,7 @@
 ---
 - name: Configure the system
-  hosts: all
+  hosts: linux_dev
   roles:
     - package-manager
     - git
+    # - alacritty
