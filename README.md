@@ -1,11 +1,9 @@
 # Configurazioni
 
-These are the configuration files and scripts I use on my machines. I install then using stow.
+My configurations and dotfiles installed using ansible.
 
 ## Lessons learned
+I keep a small personal wiki with a few information I look for relatively often.
 
-- More packages are better than fewer packages because it’s easier to decide if I need the --no-folding flag.
-
-- Use environment variables for secrets to avoid accidentally pushing sensitive information.
-
-- It's wrong to use a Makefile if all of my target are `PHONY` anyway. A setup script is better.
+- [On ansible](personal_docs/ansible.md)
+- [On fonts](personal_docs/fonts.md)
