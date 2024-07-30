@@ -1,0 +1,25 @@
+---
+- name: Install tmux (Fedora)
+  when: ansible_distribution | lower == 'fedora'
+  become: true
+  ansible.builtin.dnf:
+    name: tmux
+    state: latest
+
+- name: Ensure ~/.config/tmux/ exists
+  ansible.builtin.file:
+    path: '/home/{{ user }}/.config/tmux/'
+    state: directory
+    mode: '0755'
+
+- name: Install tmux configuration
+  ansible.builtin.copy:
+    src: tmux.conf
+    dest: '/home/{{ user }}/.config/tmux/tmux.conf'
+    mode: '0644'
+
+- name: Install tmux themes
+  ansible.builtin.copy:
+    src: tmux_themes/
+    dest: '/home/{{ user }}/.config/tmux/themes'
+    mode: '0755'
