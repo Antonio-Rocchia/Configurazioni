@@ -1,0 +1,27 @@
+---
+- name: Ensure ~/.bashrc.d/ exists
+  ansible.builtin.file:
+    path: '/home/{{ user }}/.bashrc.d/'
+    state: directory
+    mode: '0755'
+
+- name: Install bash configurations in ~/.bashrc.d
+  ansible.builtin.copy:
+    src: bashrc.d/
+    dest: '/home/{{ user }}/.bashrc.d/'
+    mode: '0644'
+
+- name: Ensure ~/.bashrc.d/ is sourced
+  ansible.builtin.blockinfile:
+    path: '/home/{{ user }}/.bashrc'
+    append_newline: true
+    block: |
+      # User specific aliases and functions
+      if [ -d ~/.bashrc.d ]; then
+          for rc in ~/.bashrc.d/*; do
+              if [ -f "$rc" ]; then
+                  . "$rc"
+              fi
+          done
+      fi
+      unset rc
