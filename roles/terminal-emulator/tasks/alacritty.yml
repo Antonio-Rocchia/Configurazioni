@@ -1,0 +1,25 @@
+---
+- name: Install alacritty (Fedora)
+  when: ansible_distribution | lower == 'fedora'
+  become: true
+  ansible.builtin.dnf:
+    name: alacritty
+    state: latest
+
+- name: Ensure ~/.config/alacritty/ exists
+  ansible.builtin.file:
+    path: '/home/{{ user }}/.config/alacritty/'
+    state: directory
+    mode: '0755'
+
+- name: Install alacritty configuration
+  ansible.builtin.copy:
+    src: alacritty.toml
+    dest: '/home/{{ user }}/.config/alacritty/alacritty.toml'
+    mode: '0644'
+
+- name: Install alacritty themes
+  ansible.builtin.copy:
+    src: alacritty_themes/
+    dest: '/home/{{ user }}/.config/alacritty/themes'
+    mode: '0755'

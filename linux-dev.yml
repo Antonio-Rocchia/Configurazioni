@@ -2,6 +2,6 @@
 - name: Configure the system
   hosts: linux_dev
   roles:
-    - package-manager
-    - git
-    # - alacritty
+    # - package-manager
+    # - git
+    - terminal-emulator

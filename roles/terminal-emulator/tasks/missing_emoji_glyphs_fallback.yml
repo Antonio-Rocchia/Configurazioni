@@ -1,0 +1,36 @@
+---
+- name: Ensure ~/.config/fontconfig/ exists
+  ansible.builtin.file:
+    path: '/home/{{ user }}/.config/fontconfig/'
+    state: directory
+    mode: '0755'
+
+- name: Create skeleton ~/.config/fontconfig/fonts.conf if it doesn't exist
+  ansible.builtin.copy:
+    content: |
+      <?xml version='1.0'?>
+      <!DOCTYPE fontconfig SYSTEM 'fonts.dtd'>
+
+      <fontconfig>
+
+        <!-- settings go here -->
+
+      </fontconfig>
+    dest: '/home/{{ user }}/.config/fontconfig/fonts.conf'
+    mode: '0644'
+    force: false
+
+
+- name: Ensure RobotoMono has a fallback for emoji glyphs
+  ansible.builtin.blockinfile:
+    path: '/home/{{ user }}/.config/fontconfig/fonts.conf'
+    insertafter: <!-- settings go here -->
+    marker: <!-- {mark} ANSIBLE MANAGED BLOCK -->
+    block: |
+      <alias>
+        <family>RobotoMono Nerd Font Emoji</family>
+        <prefer>
+          <family>RobotoMono Nerd Font</family>
+          <family>Noto Color Emoji</family>
+         </prefer>
+      </alias>

@@ -1,0 +1,33 @@
+import = ["~/.config/alacritty/themes/tokyonight/tokyonight_night.toml"]
+
+[window]
+# padding = { x = 5, y = 10 }
+# opacity = 0.90
+startup_mode = "Maximized"
+
+[cursor.style]
+shape = "Block"
+
+[font]
+size = 16.0
+
+[font.bold]
+family = "RobotoMono Nerd Font Emoji"
+style = "Bold"
+
+[font.italic]
+family = "RobotoMono Nerd Font Emoji"
+style = "Italic"
+
+[font.normal]
+family = "RobotoMono Nerd Font Emoji"
+style = "Regular"
+
+[keyboard]
+bindings = [
+  # Disable vim mode
+  { key = "Space", mods = "Control | Shift", action = "None" },
+]
+
+[shell]
+program = "/bin/bash"
