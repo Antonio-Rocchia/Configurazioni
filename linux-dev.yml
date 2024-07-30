@@ -2,6 +2,11 @@
 - name: Configure the system
   hosts: linux_dev
   roles:
-    # - package-manager
-    # - git
+    - package-manager
+    - bash
+    - git
     - terminal-emulator
+    - tmux
+    - shell-prompt
+    - neovim
+    - hacks-repo
