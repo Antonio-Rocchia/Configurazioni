@@ -1,0 +1,11 @@
+---
+- name: Ensure ~/.local/hacks/ exists
+  ansible.builtin.file:
+    path: '/home/{{ user }}/.local/hacks'
+    state: directory
+    mode: '0755'
+
+- name: Install my hacks script repo
+  ansible.builtin.git:
+    repo: '{{ neovim_config_repo }}'
+    dest: '/home/{{ user }}/.local/hacks'
