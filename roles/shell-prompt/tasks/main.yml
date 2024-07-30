@@ -9,9 +9,6 @@
     include: 'starship'
     mode: '0755'
 
-- debug:
-    msg: '{{ user }}'
-
 - name: Ensure ~/.bashrc.d/ exists
   ansible.builtin.file:
     path: '/home/{{ user }}/.bashrc.d/'
