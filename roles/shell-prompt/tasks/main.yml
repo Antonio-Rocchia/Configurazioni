@@ -1,0 +1,31 @@
+---
+- name: Install starship prompt from github
+  tags:
+    - install_from_gh_releases
+  ansible.builtin.unarchive:
+    src: 'https://github.com/starship/starship/releases/latest/download/starship-x86_64-unknown-linux-gnu.tar.gz'
+    dest: '/home/{{ user }}/.local/bin'
+    remote_src: true
+    include: 'starship'
+    mode: '0755'
+
+- debug:
+    msg: '{{ user }}'
+
+- name: Ensure ~/.bashrc.d/ exists
+  ansible.builtin.file:
+    path: '/home/{{ user }}/.bashrc.d/'
+    state: directory
+    mode: '0755'
+
+- name: Enable starship prompt in bash
+  ansible.builtin.copy:
+    src: enable_starship_prompt.sh
+    dest: '/home/{{ user }}/.bashrc.d/'
+    mode: '0644'
+
+- name: Install starship prompt configuration
+  ansible.builtin.copy:
+    src: starship.toml
+    dest: '/home/{{ user }}/.config'
+    mode: '0644'
