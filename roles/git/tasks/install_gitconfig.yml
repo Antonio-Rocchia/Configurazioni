@@ -1,0 +1,7 @@
+---
+- name: Install .gitconfig file
+  ansible.builtin.copy:
+    src: basic.gitconfig
+    dest: '/home/{{ user }}/.gitconfig'
+    force: false
+    mode: '0644'

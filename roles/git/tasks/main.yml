@@ -1,13 +1,9 @@
 ---
-- name: Install git utilities
-  block:
-    - ansible.builtin.include_tasks: 'fedora.yml'
-  when: ansible_distribution | lower == 'fedora'
-  tags: devel
+- name: Install github cli
+  ansible.builtin.include_task: install_github_cli
 
-- name: Install .gitconfig file
-  ansible.builtin.copy:
-    src: .gitconfig
-    dest: '{{ local_home_path }}/.gitconfig'
-    force: false
-    mode: 0644
+- name: Ensure a basic .gitconfig is present 
+  ansible.builtin.include_task: install_gitconfig
+
+- name: Install lazygit
+  ansible.builtin.include_task: install_lazygit

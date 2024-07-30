@@ -1,0 +1,7 @@
+---
+- name: Install github cli (Fedora)
+  when: ansible_distribution | lower == 'fedora'
+  become: true
+  ansible.builtin.dnf:
+    name: gh
+    state: latest

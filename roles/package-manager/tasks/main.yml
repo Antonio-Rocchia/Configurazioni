@@ -1,7 +1,23 @@
 ---
-- name: Configure package manager
-  block:
-    - ansible.builtin.include_vars: 'fedora.yml'
-    - ansible.builtin.include_tasks: 'fedora.yml'
+- name: Configure dnf (Fedora)
   when: ansible_distribution | lower == 'fedora'
+  block:
+    - name: Include variables (Fedora)
+      ansible.builtin.include_vars: 'fedora.yml'
 
+    - name: Enable/Disable dnf repositories (Fedora)
+      become: true
+      community.general.dnf_config_manager:
+        name: '{{ item.repo }}'
+        state: '{{ item.status }}'
+      loop: '{{ dnf_repos_status }}'
+      environment:
+        # Necessary because dnf config-manager uses the LC_* to print in a language
+        # This breaks the module
+        LC_ALL: en
+
+    - name: Update all packages (Fedora)
+      become: true
+      ansible.builtin.dnf:
+        name: '*'
+        state: latest

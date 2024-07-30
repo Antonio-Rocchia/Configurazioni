@@ -1,23 +1,18 @@
 ---
-- name: Install github cli
-  become: true
-  ansible.builtin.dnf:
-    name: gh
-    state: latest
-
-- name: Install lazygit from github
+- name: Install lazygit from github releases
+  tags:
+    - install_from_gh_releases
   block:
     - name: Ensure ~/.local/bin/ exists
       ansible.builtin.file:
-        path: '{{ local_bin_path }}'
+        path: '/home/{{ user }}/.local/bin'
         state: directory
         mode: '0755'
 
     - name: Install lazygit from github
       ansible.builtin.unarchive:
         src: "{{ lookup('url', 'https://api.github.com/repos/jesseduffield/lazygit/releases/latest', split_lines=false) | regex_search('browser_download_url.*(https://(.*?)_Linux_x86_64.tar.gz)', '\\1') | first }}"
-        dest: '{{ local_bin_path }}'
+        dest: '/home/{{ user }}/.local/bin'
         remote_src: true
         include: 'lazygit'
-        mode: 0755
-
+        mode: '0755'
