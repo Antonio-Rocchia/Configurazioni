@@ -1,6 +1,7 @@
 ---
 - name: Install roboto mono nerd font from github
   tags:
+    - install_or_update_software
     - install_from_gh_releases
   block:
     - name: Ensure ~/.local/share/fonts/ttf/RobotoMono exists

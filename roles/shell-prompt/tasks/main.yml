@@ -1,6 +1,7 @@
 ---
 - name: Install starship prompt from github
   tags:
+    - install_or_update_software
     - install_from_gh_releases
   ansible.builtin.unarchive:
     src: 'https://github.com/starship/starship/releases/latest/download/starship-x86_64-unknown-linux-gnu.tar.gz'

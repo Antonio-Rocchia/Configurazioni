@@ -26,6 +26,8 @@
         LC_ALL: en
 
     - name: Update all packages (Fedora)
+      tags:
+        - install_or_update_software
       become: true
       ansible.builtin.dnf:
         name: '*'
