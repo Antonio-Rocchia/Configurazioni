@@ -1,40 +1,23 @@
 ---
-dnf_repos_status:
-  - repo: fedora
-    status: enabled
-  - repo: fedora-cisco-openh264
-    status: enabled
-  - repo: fedora-cisco-openh264-debuginfo
-    status: disabled
-  - repo: fedora-cisco-openh264-source
-    status: disabled
-  - repo: fedora-debuginfo
-    status: disabled
-  - repo: fedora-source
-    status: disabled
-  - repo: google-chrome
-    status: enabled
-  - repo: rpmfusion-nonfree-nvidia-driver
-    status: enabled
-  - repo: rpmfusion-nonfree-nvidia-driver-debuginfo
-    status: disabled
-  - repo: rpmfusion-nonfree-nvidia-driver-source
-    status: disabled
-  - repo: rpmfusion-nonfree-steam
-    status: enabled
-  - repo: rpmfusion-nonfree-steam-debuginfo
-    status: disabled
-  - repo: rpmfusion-nonfree-steam-source
-    status: disabled
-  - repo: updates
-    status: enabled
-  - repo: updates-debuginfo
-    status: disabled
-  - repo: updates-source
-    status: disabled
-  - repo: updates-testing
-    status: disabled
-  - repo: updates-testing-debuginfo
-    status: disabled
-  - repo: updates-testing-source
-    status: disabled
+dnf_enabled_repos:
+  - fedora
+  - fedora-cisco-openh264
+  - google-chrome
+  - rpmfusion-nonfree-nvidia-driver
+  - rpmfusion-nonfree-steam
+  - updates
+
+dnf_disabled_repos:
+  - fedora-cisco-openh264-debuginfo
+  - fedora-cisco-openh264-source
+  - fedora-debuginfo
+  - fedora-source
+  - rpmfusion-nonfree-nvidia-driver-debuginfo
+  - rpmfusion-nonfree-nvidia-driver-source
+  - rpmfusion-nonfree-steam-debuginfo
+  - rpmfusion-nonfree-steam-source
+  - updates-debuginfo
+  - updates-source
+  - updates-testing
+  - updates-testing-debuginfo
+  - updates-testing-source

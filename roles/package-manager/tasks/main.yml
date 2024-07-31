@@ -5,12 +5,21 @@
     - name: Include variables (Fedora)
       ansible.builtin.include_vars: 'fedora.yml'
 
-    - name: Enable/Disable dnf repositories (Fedora)
+    - name: Enable dnf repositories (Fedora)
       become: true
       community.general.dnf_config_manager:
-        name: '{{ item.repo }}'
-        state: '{{ item.status }}'
-      loop: '{{ dnf_repos_status }}'
+        name: '{{ dnf_enabled_repos }}'
+        state: enabled
+      environment:
+        # Necessary because dnf config-manager uses the LC_* to print in a language
+        # This breaks the module
+        LC_ALL: en
+
+    - name: Disable dnf repositories (Fedora)
+      become: true
+      community.general.dnf_config_manager:
+        name: '{{ dnf_disabled_repos }}'
+        state: disabled
       environment:
         # Necessary because dnf config-manager uses the LC_* to print in a language
         # This breaks the module
