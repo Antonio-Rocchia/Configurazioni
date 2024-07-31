@@ -4,6 +4,7 @@
 export EDITOR=/usr/bin/nvim
 
 export CONFIGURAZIONI="$HOME/Configurazioni"
+export HACKS_BIN="$HOME/.local/hacks"
 export CHESS_HOME="$(xdg-user-dir DOCUMENTS)/Scacchi"
 
 
