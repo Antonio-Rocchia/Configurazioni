@@ -1,0 +1,12 @@
+---
+- name: Disable dynamic workspaces
+  community.general.dconf:
+    key: /org/gnome/mutter/dynamic-workspaces
+    value: false
+    state: present
+
+- name: Set num-workspaces
+  community.general.dconf:
+    key: /org/gnome/desktop/wm/preferences/num-workspaces
+    value: "4"
+    state: present

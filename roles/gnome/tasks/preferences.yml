@@ -1,0 +1,12 @@
+---
+- name: Ensure dark mode is enabled
+  community.general.dconf:
+    key: /org/gnome/desktop/interface/color-scheme
+    value: "'prefer-dark'"
+    state: present
+
+- name: Ensure windows's chrome have the minimize and close button
+  community.general.dconf:
+    key: /org/gnome/desktop/wm/preferences/button-layout
+    value: "'appmenu:minimize,close'"
+    state: present

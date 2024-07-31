@@ -1,0 +1,31 @@
+---
+- name: Configure gnome text editor
+  community.general.dconf:
+    key: '{{ item.key }}'
+    value: '{{ item.value }}'
+    state: present
+  loop:
+    - key: /org/gnome/TextEditor/use-system-font
+      value: false
+    - key: /org/gnome/TextEditor/custom-font
+      value: "'RobotoMono Nerd Font 14'"
+    - key: /org/gnome/TextEditor/spellcheck
+      value: false
+    - key: /org/gnome/TextEditor/show-line-numbers
+      value: true
+    - key: /org/gnome/TextEditor/restore-session
+      value: false
+    - key: /org/gnome/TextEditor/keybindings
+      value: "'vim'"
+    - key: /org/gnome/TextEditor/auto-indent
+      value: true
+    - key: /org/gnome/TextEditor/indent-style
+      value: "'space'"
+    - key: /org/gnome/TextEditor/indent-width
+      value: 4
+    - key: /org/gnome/TextEditor/highlight-current-line
+      value: true
+    - key: /org/gnome/TextEditor/highlight-matching-brackets
+      value: true
+    - key: /org/gnome/TextEditor/draw-spaces
+      value: "['space','tab','nbsp','leading','trailing']"

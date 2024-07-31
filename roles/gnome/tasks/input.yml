@@ -1,0 +1,12 @@
+---
+- name: Set available input sources
+  community.general.dconf:
+    key: /org/gnome/desktop/input-sources/sources
+    value: "[('xkb', 'it'), ('xkb', 'us')]"
+    state: present
+
+- name: Set xkb-options
+  community.general.dconf:
+    key: /org/gnome/desktop/input-sources/xkb-options
+    value: "['lv3:ralt_switch,caps:escape']"
+    state: present

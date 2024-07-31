@@ -1,0 +1,24 @@
+---
+- name: Ensure external search provider are enabled
+  community.general.dconf:
+    key: /org/gnome/desktop/search-providers/disable-external
+    value: false
+    state: present
+
+- name: Set enabled search provider
+  community.general.dconf:
+    key: /org/gnome/desktop/search-providers/enabled
+    value: "['org.gnome.Nautilus.desktop','org.gnome.Settings.desktop','org.gnome.Calendar.desktop','org.gnome.Characters.desktop','org.gnome.Calculator.desktop']"
+    state: present
+
+- name: Set disabled search provider
+  community.general.dconf:
+    key: /org/gnome/desktop/search-providers/disabled
+    value: "['org.mozilla.firefox.desktop','org.gnome.clocks.desktop','org.gnome.Software.desktop']"
+    state: present
+
+- name: Configure search provider sort order
+  community.general.dconf:
+    key: /org/gnome/desktop/search-providers/sort-order
+    value: "['org.gnome.Nautilus.desktop','org.gnome.Settings.desktop','org.gnome.Calendar.desktop','org.gnome.Characters.desktop','org.gnome.Calculator.desktop']"
+    state: present

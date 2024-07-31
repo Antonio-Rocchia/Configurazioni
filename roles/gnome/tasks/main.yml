@@ -1,0 +1,20 @@
+---
+- name: Ensure python3-psutil module is installed (Fedora)
+  tags:
+    - install_or_update_software
+  when: ansible_distribution | lower == 'fedora'
+  become: true
+  ansible.builtin.dnf:
+    name: python3-psutil >= 4.0.0
+    state: present
+
+- name: Configure gnome
+  when: ansible_env["XDG_SESSION_DESKTOP"] | lower == 'gnome'
+  ansible.builtin.include_tasks: '{{ item }}'
+  loop: 
+    - input.yml
+    - keybindings.yml
+    - text_editor.yml
+    - workspaces.yml
+    - search_provider.yml
+    - preferences.yml
