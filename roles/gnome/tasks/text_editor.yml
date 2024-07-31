@@ -1,5 +1,4 @@
 ---
----
 - name: Install roboto mono nerd font from github
   tags:
     - install_or_update_software
