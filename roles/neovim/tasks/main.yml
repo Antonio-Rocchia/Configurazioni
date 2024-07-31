@@ -9,3 +9,16 @@
   ansible.builtin.git:
     repo: '{{ neovim_config_repo }}'
     dest: '/home/{{ user }}/.config/nvim'
+
+- name: Install neovim (Fedora)
+  when: ansible_distribution | lower == 'fedora'
+  become: true
+  ansible.builtin.dnf:
+    name: 
+      - g++
+      - cmake
+      - ripgrep
+      - fd-find
+      - fzf
+      - neovim
+    state: latest
