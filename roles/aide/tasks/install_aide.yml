@@ -1,0 +1,27 @@
+---
+- name: Install aide (Fedora)
+  tags:
+    - install_or_update_software
+  when: ansible_distribution | lower == 'fedora'
+  become: true
+  ansible.builtin.dnf:
+    name: aide
+    state: latest
+
+- name: Ensure ~/.local/share/aide/ exists
+  ansible.builtin.file:
+    path: '/home/{{ user }}/.local/share/aide/'
+    state: directory
+    mode: '0755'
+
+- name: Ensure ~/.local/share/aide/logs/ exists
+  ansible.builtin.file:
+    path: '/home/{{ user }}/.local/share/aide/logs/'
+    state: directory
+    mode: '0755'
+
+- name: Ensure ~/.local/share/aide/database/ exists
+  ansible.builtin.file:
+    path: '/home/{{ user }}/.local/share/aide/database/'
+    state: directory
+    mode: '0755'

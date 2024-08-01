@@ -1,0 +1,6 @@
+---
+- name: Install aide
+  ansible.builtin.include_tasks: 'install_aide.yml'
+
+- name: Monitor the home directory using aide
+  ansible.builtin.include_tasks: 'monitor_home.yml'

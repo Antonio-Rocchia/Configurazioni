@@ -1,0 +1,27 @@
+# Monitor my home directory
+
+@@define DBDIR /home/{{ user }}/.local/share/aide/database
+@@define LOGDIR /home/{{ user }}/.local/share/aide/logs
+
+# The location of the database to be read.
+database_in=file:@@{DBDIR}/aide.db
+# The location of the database to be written.
+database_out=file:@@{DBDIR}/aide.db.new
+
+# Whether to gzip the output to database
+gzip_dbout=no
+
+# Default.
+log_level=warning
+report_level=changed_attributes
+
+report_url=file:@@{LOGDIR}/aide.log
+report_url=stdout
+
+NEWFILE = p+i+u+g
+
+=/home/{{ user }}/ NEWFILE
+=/home/{{ user }}/.config/ NEWFILE
+=/home/{{ user }}/.local/ NEWFILE
+=/home/{{ user }}/.local/bin/ NEWFILE
+=/home/{{ user }}/.local/share/ NEWFILE

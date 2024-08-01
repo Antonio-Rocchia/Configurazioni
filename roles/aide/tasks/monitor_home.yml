@@ -1,0 +1,6 @@
+---
+- name: Install aide configuration to monitor the home folder
+  ansible.builtin.template:
+    src: monitor_home.conf.j2
+    dest: '/home/{{ user }}/.local/share/aide/monitor_home.conf'
+    mode: '0644'

@@ -7,6 +7,7 @@
         name: '{{ hostname }}'
   roles:
     - package-manager
+    - aide
     - bash
     - git
     - terminal-emulator
