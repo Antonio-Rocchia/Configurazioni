@@ -1,0 +1,8 @@
+---
+- name: Ensure flathub is enabled
+  community.general.flatpak_remote:
+    enabled: true
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+    method: system
+    name: flathub
+    state: present

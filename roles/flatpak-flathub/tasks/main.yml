@@ -1,0 +1,6 @@
+---
+- name: Install flatpak
+  ansible.builtin.include_tasks: install_flatpak.yml
+
+- name: Enable remotes
+  ansible.builtin.include_tasks: enable_remotes.yml

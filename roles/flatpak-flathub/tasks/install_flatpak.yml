@@ -1,0 +1,9 @@
+---
+- name: Install flatpak (Fedora)
+  tags:
+    - install_or_update_software
+  when: ansible_distribution | lower == 'fedora'
+  become: true
+  ansible.builtin.dnf:
+    name: flatpak
+    state: latest
