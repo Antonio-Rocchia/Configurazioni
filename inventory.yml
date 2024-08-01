@@ -3,3 +3,4 @@ linux_dev:
     127.0.0.1:
       ansible_connection: local 
       user: "{{ lookup('env', 'USER') }}"
+      hostname: nomade
