@@ -1,7 +1,13 @@
 ---
+- name: Ensure ~/.config/git exists
+  ansible.builtin.file:
+    path: '/home/{{ user }}/.config/git/'
+    state: directory
+    mode: '0755'
+
 - name: Install .gitconfig file
   ansible.builtin.copy:
     src: basic.gitconfig
-    dest: '/home/{{ user }}/.gitconfig'
+    dest: '/home/{{ user }}/.config/git/config'
     force: false
     mode: '0644'
