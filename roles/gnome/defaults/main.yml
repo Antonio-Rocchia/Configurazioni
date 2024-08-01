@@ -77,7 +77,7 @@ keymaps:
   - key: /org/gnome/desktop/wm/keybindings/begin-resize
     value: '@as []'
   - key: /org/gnome/desktop/wm/keybindings/close
-    value: '@as []'
+    value: "['<Super>q']"
   - key: /org/gnome/desktop/wm/keybindings/cycle-group
     value: '@as []'
   - key: /org/gnome/desktop/wm/keybindings/cycle-group-backward

@@ -8,5 +8,5 @@
 - name: Set num-workspaces
   community.general.dconf:
     key: /org/gnome/desktop/wm/preferences/num-workspaces
-    value: "4"
+    value: "5"
     state: present
