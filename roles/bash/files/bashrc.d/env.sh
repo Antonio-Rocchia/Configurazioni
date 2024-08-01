@@ -35,11 +35,3 @@ done
 unset user_path_dirs
 
 export PATH
-
-##############################
-# Unclutter $HOME
-##############################
-export ANSIBLE_HOME="$XDG_DATA_HOME"/ansible
-export HISTFILE="${XDG_STATE_HOME}"/bash/history
-export CUDA_CACHE_PATH="$XDG_CACHE_HOME"/nv
-
