@@ -1,7 +1,7 @@
 # Fonts
 
 ## Installing fonts per user
-[archwiki:fonts](https://wiki.archlinux.org/title/Fonts)
+[archwiki: fonts](https://wiki.archlinux.org/title/Fonts)
 - For a single user, install fonts to ~/.local/share/fonts/.
     - In many cases this suffices, unless you run graphical applications as other users.
     - In the past ~/.fonts/ was used, but is now deprecated.
@@ -27,7 +27,7 @@
 
 
 ## Display emojis in the terminal emulator
-[archwiki:font configuration](https://wiki.archlinux.org/title/Font_configuration)
+[archwiki: font configuration](https://wiki.archlinux.org/title/Font_configuration)
 > Configuration can be done per-user through $XDG_CONFIG_HOME/fontconfig/fonts.conf (usually $HOME/.config/fontconfig/fonts.conf), and globally with /etc/fonts/local.conf. The settings in the per-user configuration have precedence over the global configuration. Both these files use the same syntax. 
 
 > Fontconfig configuration files use XML format and need these headers: 
