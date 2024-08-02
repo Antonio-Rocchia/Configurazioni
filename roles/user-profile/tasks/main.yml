@@ -1,0 +1,14 @@
+---
+- name: Ensure the user's password expires
+  become: true
+  ansible.builtin.user:
+    name: '{{ user }}'
+    state: present
+    create_home: true
+    password_expire_min: 0
+    password_expire_max: 90
+    password_expire_warn: 7
+
+- name: Set the device hostname
+  ansible.builtin.hostname:
+    name: '{{ hostname }}'

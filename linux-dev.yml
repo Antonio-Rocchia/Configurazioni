@@ -1,11 +1,8 @@
 ---
 - name: Configure the system
   hosts: linux_dev
-  tasks:
-    - name: Set the device hostname
-      ansible.builtin.hostname:
-        name: '{{ hostname }}'
   roles:
+    - user-profile
     - package-manager
     - aide
     - bash
