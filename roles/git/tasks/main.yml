@@ -1,9 +1,13 @@
 ---
 - name: Install github cli
+  tags:
+    - install_or_update_software
   ansible.builtin.include_tasks: install_github_cli.yml
 
 - name: Ensure a basic .gitconfig is present 
   ansible.builtin.include_tasks: install_gitconfig.yml
 
 - name: Install lazygit
+  tags:
+    - install_or_update_software
   ansible.builtin.include_tasks: install_lazygit.yml

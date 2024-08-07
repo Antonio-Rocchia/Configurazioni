@@ -1,5 +1,7 @@
 ---
 - name: Install aide
+  tags:
+    - install_or_update_software
   ansible.builtin.include_tasks: 'install_aide.yml'
 
 - name: Monitor the home directory using aide

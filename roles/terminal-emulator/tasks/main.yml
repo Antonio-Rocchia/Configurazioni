@@ -1,9 +1,13 @@
 ---
 - name: Install nerd fonts
+  tags:
+    - install_or_update_software
   ansible.builtin.include_tasks: nerdfonts.yml
 
 - name: Fix emoji rendering with font fallback
   ansible.builtin.include_tasks: missing_emoji_glyphs_fallback.yml
 
 - name: Install alacritty
+  tags:
+    - install_or_update_software
   ansible.builtin.include_tasks: alacritty.yml
